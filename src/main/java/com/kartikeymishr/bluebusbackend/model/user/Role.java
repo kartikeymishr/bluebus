@@ -1,4 +1,4 @@
-package com.kartikeymishr.bluebusbackend.model;
+package com.kartikeymishr.bluebusbackend.model.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

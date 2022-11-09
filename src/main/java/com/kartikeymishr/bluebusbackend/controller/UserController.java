@@ -1,8 +1,8 @@
 package com.kartikeymishr.bluebusbackend.controller;
 
-import com.kartikeymishr.bluebusbackend.dto.model.UserDto;
-import com.kartikeymishr.bluebusbackend.dto.request.UserSignupRequest;
-import com.kartikeymishr.bluebusbackend.dto.response.Response;
+import com.kartikeymishr.bluebusbackend.dto.model.user.UserDto;
+import com.kartikeymishr.bluebusbackend.dto.request.LoginRequest;
+import com.kartikeymishr.bluebusbackend.dto.request.SignupRequest;
 import com.kartikeymishr.bluebusbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +19,19 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Response<UserDto>> signUpUser(@RequestBody UserSignupRequest userSignupRequest) throws Exception {
+    public ResponseEntity<UserDto> signUpUser(@RequestBody SignupRequest signupRequest) throws Exception {
         UserDto userDto = new UserDto()
-                .setEmail(userSignupRequest.getEmail())
-                .setPassword(userSignupRequest.getPassword())
-                .setFirstName(userSignupRequest.getFirstName())
-                .setLastName(userSignupRequest.getLastName())
-                .setMobileNumber(userSignupRequest.getMobileNumber());
+                .setEmail(signupRequest.getEmail())
+                .setPassword(signupRequest.getPassword())
+                .setFirstName(signupRequest.getFirstName())
+                .setLastName(signupRequest.getLastName())
+                .setMobileNumber(signupRequest.getMobileNumber());
 
-        Response<UserDto> response = new Response<UserDto>().setPayload(userService.createUser(userDto));
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(userService.createUser(userDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<UserDto>> loginUser(@RequestBody UserSignupRequest userSignupRequest) {
-        return null;
+    public ResponseEntity<UserDto> loginUser(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.validateUser(loginRequest));
     }
 }

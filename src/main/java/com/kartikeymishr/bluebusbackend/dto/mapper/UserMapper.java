@@ -1,7 +1,7 @@
 package com.kartikeymishr.bluebusbackend.dto.mapper;
 
-import com.kartikeymishr.bluebusbackend.dto.model.UserDto;
-import com.kartikeymishr.bluebusbackend.model.User;
+import com.kartikeymishr.bluebusbackend.dto.model.user.UserDto;
+import com.kartikeymishr.bluebusbackend.model.user.User;
 
 public class UserMapper {
 

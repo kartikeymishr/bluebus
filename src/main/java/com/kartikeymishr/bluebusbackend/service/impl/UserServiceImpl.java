@@ -1,9 +1,10 @@
 package com.kartikeymishr.bluebusbackend.service.impl;
 
 import com.kartikeymishr.bluebusbackend.dto.mapper.UserMapper;
-import com.kartikeymishr.bluebusbackend.dto.model.UserDto;
-import com.kartikeymishr.bluebusbackend.model.User;
-import com.kartikeymishr.bluebusbackend.repository.UserRepository;
+import com.kartikeymishr.bluebusbackend.dto.model.user.UserDto;
+import com.kartikeymishr.bluebusbackend.dto.request.LoginRequest;
+import com.kartikeymishr.bluebusbackend.model.user.User;
+import com.kartikeymishr.bluebusbackend.repository.user.UserRepository;
 import com.kartikeymishr.bluebusbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,5 +54,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByEmail(String email) {
         return UserMapper.toUserDto(userRepository.findByEmail(email));
+    }
+
+    @Override
+    public UserDto validateUser(LoginRequest loginRequest) {
+        UserDto user = findByEmail(loginRequest.getEmail());
+        if (user != null && bCryptPasswordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return user;
+        }
+
+        throw new RuntimeException("Incorrect Password");
     }
 }

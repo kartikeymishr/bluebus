@@ -1,4 +1,4 @@
-package com.kartikeymishr.bluebusbackend.model;
+package com.kartikeymishr.bluebusbackend.model.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +40,10 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> userRole;
+
+    public String getFullName() {
+        return firstName != null ? firstName.concat(" ").concat(lastName) : "";
+    }
 }
 
 

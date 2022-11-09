@@ -48,10 +48,9 @@ public class BluebusException {
 
     private static String format(String template, String... args) {
         Optional<String> templateContent = Optional.ofNullable(propertiesConfig.getConfigValue(template));
-        if (templateContent.isPresent()) {
-            return MessageFormat.format(templateContent.get(), (Object[]) args);
-        }
-        return String.format(template, (Object[]) args);
+        return templateContent.map(
+                s -> MessageFormat.format(s, (Object[]) args))
+                .orElseGet(() -> String.format(template, (Object[]) args));
     }
 
     public static class EntityNotFoundException extends RuntimeException {
